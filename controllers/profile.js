@@ -16,6 +16,12 @@ const handleProfileGet = (req, res, db) => {
 const handleProfileUpdate = (req, res, db) => {
     const { id } = req.params;
     const { name, avatar } = req.body.formInput;
+    let newAvatar;
+    if(!avatar) {
+        newAvatar = db('users').where({id}).select('avatar');
+    } else {
+        newAvatar = avatar;
+    }
     db('users')
         .where({ id })
         .update({ name, avatar })
