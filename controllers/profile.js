@@ -17,11 +17,9 @@ const handleProfileUpdate = (req, res, db) => {
     const { id } = req.params;
     const { name, avatar } = req.body.formInput;
     let newAvatar;
-    if(!avatar) {
-        newAvatar = db('users').where({id}).select('avatar');
-    } else {
-        newAvatar = avatar;
-    }
+    let newName;
+    !avatar ? newAvatar = db('users').where({id}).select('avatar') : newAvatar = avatar;
+    !name ? newName = db('user').where({id}).select('name') : newName = name;
     db('users')
         .where({ id })
         .update({ name, avatar })
